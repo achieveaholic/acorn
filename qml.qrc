@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>views/main.qml</file>
+        <file>views/Tasks.qml</file>
+        <file>views/TasksForm.qml</file>
+        <file>resources/qtquickcontrols2.conf</file>
+    </qresource>
+</RCC>
