@@ -6,4 +6,4 @@ Thank you for your understanding!
 
 ## Issue tracking
 
-Using ZenHub as an issue tracker.
+Using [ZenHub](https://github.com/marketplace/zenhub) as an issue tracker / project management tool.
