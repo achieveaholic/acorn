@@ -8,8 +8,9 @@ NotificationClient::NotificationClient(QQmlApplicationEngine *engine)
 
 void NotificationClient::setNotification(const QString &notification)
 {
-    if (m_notification == notification)
+    if (m_notification == notification){
         return;
+    }
 
     m_notification = notification;
     emit notificationChanged();

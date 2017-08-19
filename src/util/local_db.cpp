@@ -44,7 +44,7 @@ QString initializeDatabase(){
     QString databaseFilePath = getPath() + DB_FILE_PATH;
 
     QDir dir(databaseDir);
-    if (!dir.exists()){
+    if (not dir.exists()){
         dir.mkpath(databaseDir);
     }
     else {
