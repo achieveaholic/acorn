@@ -1,10 +1,43 @@
-QT += qml quick
+win32:QT += qml quick sql widgets gui
+#else:unix:QT += qml quick sql
+else:QT += qml quick sql widgets gui androidextras
+
+ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android-sources
+
+wi32:INCLUDEPATH += $$(NDK_INCLUDE)
+#else:unix:INCLUDEPATH += $$(NDK_INCLUDE)
+else:INCLUDEPATH += $$(NDK_INCLUDE)
+
+win32:LIBS +=
+#else:unix:LIBS +=
+else:LIBS += -L"d:/Software/Android/sdk/ndk-bundle/platforms/android-26/arch-x86/usr/lib" -landroid
 
 CONFIG += c++11
 
-SOURCES += src/main.cpp
+# Windows icon
+RC_FILE = resources/icons/acorn.rc
+
+HEADERS += \
+    src/model/task.h \
+    src/util/local_db.h \
+    src/main.h \
+    src/util/notificationclient.h \
+    src/util/system.h
+
+SOURCES += src/main.cpp \
+    src/model/task.cpp \
+    src/util/local_db.cpp \
+    src/util/notificationclient.cpp \
+    src/util/system.cpp
 
 RESOURCES += qml.qrc
+
+OTHER_FILES += \
+    qml/main.qml \
+    qml/Tasks.qml \
+    qml/TasksForm.qml \
+    android-sources/src/org/achieveaholic/acorn/NotificationClient.java \
+    android-sources/AndroidManifest.xml
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -27,3 +60,4 @@ DEFINES += QT_DEPRECATED_WARNINGS
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+

@@ -7,9 +7,6 @@ ListView {
     width: 640
     height: 480
 
-    property alias colorModel: colorModel
-
-
     displaced: Transition {
         NumberAnimation { properties: "x,y"; easing.type: Easing.OutQuad }
     }
@@ -18,13 +15,7 @@ ListView {
 
         id: visualModel
 
-        model: ListModel {
-            id: colorModel
-
-            ListElement { _id: "t1"; text: "Task 1"; color: "#eef2f0" }
-            ListElement { _id: "t2"; text: "Task 2"; color: "#c6d0be" }
-            ListElement { _id: "t3"; text: "Task 3"; color: "#d0bec9" }
-        }
+        model: wind.persistentList
 
         delegate: MouseArea {
             id: delegateRoot
@@ -34,6 +25,7 @@ ListView {
             width: root.width
             height: 80
             drag.target: icon
+            drag.axis: Drag.YAxis
 
             Rectangle {
                 id: icon
@@ -51,11 +43,13 @@ ListView {
 
                     onCheckedChanged: {
                         if (done.checked){
+                            messageDialog.visible = true
                             colorModel.remove(model.index)
                             //console.log("#88" + colorModel.get(model.index).color.substring(1,7))
                             //colorModel.get(model.index).color = "#88" + colorModel.get(model.index).color.substring(1,7)
                         }
                         else {
+                            notificationClient.notification = "hello qt"
                             //console.log("#" + colorModel.get(model.index).color.substring(3,9))
                             //colorModel.get(model.index).color = "#" + colorModel.get(model.index).color.substring(3,9)
                         }
@@ -65,6 +59,9 @@ ListView {
                 Text {
                     id: content
                     text: qsTr(model.text)
+                    font.pixelSize: 20
+                    // font.weight: Font.Bold
+                    // font.family: "Titillium Web"
                     anchors.horizontalCenter: icon.horizontalCenter
                     anchors.verticalCenter: icon.verticalCenter
                 }
