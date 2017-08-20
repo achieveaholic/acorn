@@ -6,4 +6,4 @@
 
 * to be added
 
-![built-with-qt](resources/images/Built_with_Qt.png)
+[![built-with-qt](resources/images/Built_with_Qt.png)](https://www.qt.io/)
