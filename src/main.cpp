@@ -9,7 +9,7 @@
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QGuiApplication app(argc, argv);
+    QApplication app(argc, argv);
 
     app.setApplicationName("Acorn");
     app.setOrganizationName("AchieveAholic");
@@ -25,7 +25,6 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
 
     NotificationClient *notificationClient = new NotificationClient(&engine);
-    notificationClient->loadNotification(); // TODO move this inside the constructor
 
     // --------------------------------------------------------------- //
     // TODO remove this block (from QML too)
@@ -44,6 +43,8 @@ int main(int argc, char *argv[])
     // --------------------------------------------------------------- //
 
     engine.load(QUrl(QLatin1String("qrc:/qml/main.qml")));
+
+    lateInit(*notificationClient);
 
     return app.exec();
 }

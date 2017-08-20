@@ -21,16 +21,19 @@ public:
     QString notification() const;
 
     void loadNotification();
+    void initializeTray();
 
 signals:
     void notificationChanged();
 
 private slots:
-    void updateAndroidNotification();
+    void updateNotification();
+    void close();
 
 private:
     QString m_notification;
     QQmlApplicationEngine *m_engine;
+    QSystemTrayIcon *tray;
 };
 
 #endif // NOTIFICATIONCLIENT_H

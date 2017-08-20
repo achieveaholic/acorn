@@ -11,6 +11,18 @@ void showSystemInfo() {
     qDebug() << "Operating System Version: " << QSysInfo::productType();
 }
 
-void tray(){
-    QDialog dialog;
+/**
+ * A placeholder function for delayed initializations.
+ * @brief lateInit
+ * @param notificationClient
+ */
+void lateInit(NotificationClient &notificationClient) {
+
+#ifdef Q_OS_ANDROID
+
+#elif _WIN32 || __linux__
+
+    notificationClient.initializeTray();
+
+#endif
 }

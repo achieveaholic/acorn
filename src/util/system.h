@@ -4,11 +4,10 @@
 #include <QDebug>
 #include <QSysInfo>
 #include <QDir>
-#include <QDialog>
-#include <QSystemTrayIcon>
-#include <QIcon>
+
+#include "notificationclient.h"
 
 void showSystemInfo();
-void tray();
+void lateInit(NotificationClient &notificationClient);
 
 #endif // SYSTEM_H
