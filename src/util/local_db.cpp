@@ -19,13 +19,13 @@ QString getPath() {
     return mediaPath.toString() + "/Android/data/" + package.toString() + "/files/";
 }
 
-#elif _WIN32
+#elif defined(_WIN32)
 
 QString getPath() {
     return QStandardPaths::writableLocation(QStandardPaths::DataLocation)+"/";
 }
 
-#elif __linux__
+#elif defined(__linux__)
 
 QString getPath() {
     // TODO test

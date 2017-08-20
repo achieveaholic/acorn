@@ -43,7 +43,7 @@ void NotificationClient::updateNotification()
                                        javaNotification.object<jstring>());
 }
 
-#elif _WIN32 || __linux__
+#elif defined(_WIN32) || defined(__linux__)
 
 /**
  * For the desktop vesrion - initializing the tray icon.
@@ -64,7 +64,7 @@ void NotificationClient::initializeTray()
     QMenu* settingsMenu = new QMenu("Settings");
     rootMenu->addMenu(settingsMenu);
 
-    // add exit action
+    // create and add exit action
     QAction *exitAction = new QAction(tr("E&xit"), this);
     exitAction->setShortcuts(QKeySequence::Quit);
     exitAction->setStatusTip(tr("Exit the application"));

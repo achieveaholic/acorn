@@ -20,7 +20,7 @@ void lateInit(NotificationClient &notificationClient) {
 
 #ifdef Q_OS_ANDROID
 
-#elif _WIN32 || __linux__
+#elif defined(_WIN32) || defined(__linux__)
 
     notificationClient.initializeTray();
 
