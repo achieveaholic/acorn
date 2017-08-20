@@ -16,13 +16,13 @@ void showSystemInfo() {
  * @brief lateInit
  * @param notificationClient
  */
-void lateInit(NotificationClient &notificationClient) {
+void lateInit(NotificationClient *notificationClient) {
 
 #ifdef Q_OS_ANDROID
 
 #elif defined(_WIN32) || defined(__linux__)
 
-    notificationClient.initializeTray();
+    notificationClient->initializeTray();
 
 #endif
 }

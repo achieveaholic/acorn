@@ -8,6 +8,6 @@
 #include "notificationclient.h"
 
 void showSystemInfo();
-void lateInit(NotificationClient &notificationClient);
+void lateInit(NotificationClient *notificationClient);
 
 #endif // SYSTEM_H
