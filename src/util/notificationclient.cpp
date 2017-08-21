@@ -95,12 +95,32 @@ void NotificationClient::updateNotification()
 
 #elif defined(_WIN32) || defined(__linux__)
 
+void NotificationClient::updateNotification()
+{
+    qDebug() << "Message: " << m_notification;
+
+    // Tray message
+    tray->showMessage("Hi there!", m_notification, QSystemTrayIcon::Information, 1000);
+
+    // Message box
+    QMessageBox::information(0, tr("Hello"), tr("Just testing a dialog box."));
+}
+
+#endif
+
+
 /**
  * For the desktop vesrion - initializing the tray icon.
  * @brief NotificationClient::initializeTray
  */
 void NotificationClient::initializeTray()
 {
+    #ifdef Q_OS_ANDROID
+
+    // do nothing
+
+    #elif defined(_WIN32) || defined(__linux__)
+
     // create and initialize tray
     tray = new QSystemTrayIcon(m_engine->rootObjects().at(0));
     tray->setIcon(QIcon("d:/repo/acorn/resources/images/icon.png"));
@@ -124,19 +144,6 @@ void NotificationClient::initializeTray()
 
     // add exit action to the root menu
     rootMenu->addAction(exitAction);
+
+    #endif
 }
-
-void NotificationClient::updateNotification()
-{
-    qDebug() << "Message: " << m_notification;
-
-    // Tray message
-    tray->showMessage("Hi there!", m_notification, QSystemTrayIcon::Information, 1000);
-
-    // Message box
-    QMessageBox::information(0, tr("Hello"), tr("Just testing a dialog box."));
-}
-
-#endif
-
-

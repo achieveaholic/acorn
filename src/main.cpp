@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
 
     engine.load(QUrl(QLatin1String("qrc:/qml/main.qml")));
 
-    lateInit(notificationClient);
+    notificationClient->initializeTray();
 
     return app.exec();
 }
