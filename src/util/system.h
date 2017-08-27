@@ -5,9 +5,11 @@
 #include <QSysInfo>
 #include <QDir>
 
-#include "notificationclient.h"
+#include "notification_client.h"
 
-void showSystemInfo();
-void lateInit(NotificationClient *notificationClient);
+namespace acorn {
+
+    void showSystemInfo();
+}
 
 #endif // SYSTEM_H

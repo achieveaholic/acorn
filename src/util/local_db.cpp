@@ -1,144 +1,142 @@
 #include "local_db.h"
 
-#ifdef Q_OS_ANDROID
+namespace acorn {
 
-#include <QAndroidJniObject>
-#include <android/log.h>
-#include <android/storage_manager.h>
-#include <android/obb.h>
+    #ifdef Q_OS_ANDROID
 
+    QString getPath() {
+        __android_log_print(android_LogPriority::ANDROID_LOG_DEBUG, "Debug", "Retrieving android files path.");
 
-QString getPath() {
-    __android_log_print(android_LogPriority::ANDROID_LOG_DEBUG, "Debug", "Retrieving android files path.");
+        QAndroidJniObject mediaDir = QAndroidJniObject::callStaticObjectMethod("android/os/Environment", "getExternalStorageDirectory", "()Ljava/io/File;");
+        QAndroidJniObject mediaPath = mediaDir.callObjectMethod( "getAbsolutePath", "()Ljava/lang/String;" );
+        QAndroidJniObject activity = QAndroidJniObject::callStaticObjectMethod("org/qtproject/qt5/android/QtNative", "activity", "()Landroid/app/Activity;");
+        QAndroidJniObject package = activity.callObjectMethod("getPackageName", "()Ljava/lang/String;");
 
-    QAndroidJniObject mediaDir = QAndroidJniObject::callStaticObjectMethod("android/os/Environment", "getExternalStorageDirectory", "()Ljava/io/File;");
-    QAndroidJniObject mediaPath = mediaDir.callObjectMethod( "getAbsolutePath", "()Ljava/lang/String;" );
-    QAndroidJniObject activity = QAndroidJniObject::callStaticObjectMethod("org/qtproject/qt5/android/QtNative", "activity", "()Landroid/app/Activity;");
-    QAndroidJniObject package = activity.callObjectMethod("getPackageName", "()Ljava/lang/String;");
-
-    return mediaPath.toString() + "/Android/data/" + package.toString() + "/files/";
-}
-
-#elif defined(_WIN32)
-
-QString getPath() {
-    return QStandardPaths::writableLocation(QStandardPaths::DataLocation)+"/";
-}
-
-#elif defined(__linux__)
-
-QString getPath() {
-    // TODO test
-    return QStandardPaths::writableLocation(QStandardPaths::DataLocation)+"/";
-    // return "~/.achieveaholic/acron";
-}
-
-#endif
-
-
-/**
- * @brief Initialize the app database.
- */
-QString initializeDatabase(){
-    QString databaseDir = getPath() + "db";
-    QString databaseFilePath = getPath() + DB_FILE_PATH;
-
-    QDir dir(databaseDir);
-    if (not dir.exists()){
-        dir.mkpath(databaseDir);
-    }
-    else {
-        qDebug() << databaseDir << " already exists!";
+        return mediaPath.toString() + "/Android/data/" + package.toString() + "/files/";
     }
 
-    FILE* test =  fopen(databaseFilePath.toLocal8Bit(), "r");
-    if (test == NULL) {
-        qDebug() << "The database file does not exist.";
+    #elif defined(_WIN32)
 
-        qDebug() << "Creating the directory: " << databaseDir;
-        QDir dir = QDir::root();
-        dir.mkpath(databaseDir);
-
-        // FIXME if the directory creation fails, warn user about required permission -> Storage
-
-        qDebug() << "Writing the file: " << databaseFilePath;
-        writeDatabase(databaseFilePath);
+    QString getPath() {
+        return QStandardPaths::writableLocation(QStandardPaths::DataLocation)+"/";
     }
-    fclose(test);
 
-    return databaseFilePath;
-}
+    #elif defined(__linux__)
 
-/**
- * @brief writeDatabase
- * @param path
- */
-void writeDatabase(QString path) {
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(path);
-    if(db.open()){
-        QSqlQuery create(TASK_TABLE, db);
-        QSqlQuery insert(TASK_ROWS, db);
-        db.commit();
-        db.close();
-
-        qDebug() << "Database created.";
+    QString getPath() {
+        // TODO test
+        return QStandardPaths::writableLocation(QStandardPaths::DataLocation)+"/";
+        // return "~/.achieveaholic/acron";
     }
-    else {
-        qDebug() << "Could not create database.";
-    }
-}
 
-/**
- * @brief Check if the path refers to an existing file.
- * @param path
- */
-bool fileExists(QString path) {
-    QFileInfo check_file(path);
-    return check_file.exists() && check_file.isFile();
-}
+    #endif
 
-/**
- * @brief setTasks
- * @param ctxt
- */
-void setTasks(QQmlContext *ctxt){
-    QList<QObject*> taskList;
-    QString databaseFilePath = initializeDatabase();
 
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(databaseFilePath);
-    if (db.open()){
-        qDebug() << "success";
+    /**
+     * @brief Initialize the app database.
+     */
+    QString initializeDatabase(){
+        QString databaseDir = getPath() + "db";
+        QString databaseFilePath = getPath() + DB_FILE_PATH;
 
-        QSqlQuery query(GET_ALL_TASKS, db);
-        while(query.next()){
-            /*
-            qDebug() << "-> " << query.value("id").toLongLong() << " "
-                              << query.value("title").toString() << " "
-                              << query.value(3).toInt() << " "
-                              << query.value(2).toString();
-                              */
-
-            Task *task = new Task(query.value("id").toLongLong(),
-                                  query.value("title").toString(),
-                                  query.value("color").toString(),
-                                  Task::Priority(query.value("prio").toInt()),
-                                  false);
-            taskList.append(task);
-            qDebug() << (static_cast<Task::Priority>(task->prio())) << " " << (task->prio() == Task::Priority::High);
+        QDir dir(databaseDir);
+        if (not dir.exists()){
+            dir.mkpath(databaseDir);
+        }
+        else {
+            qDebug() << databaseDir << " already exists!";
         }
 
-        db.close();
-    }
-    else {
-        qDebug() << "Could not connect to the database.";
+        FILE* test =  fopen(databaseFilePath.toLocal8Bit(), "r");
+        if (test == NULL) {
+            qDebug() << "The database file does not exist.";
+
+            qDebug() << "Creating the directory: " << databaseDir;
+            QDir dir = QDir::root();
+            dir.mkpath(databaseDir);
+
+            // FIXME if the directory creation fails, warn user about required permission -> Storage
+
+            qDebug() << "Writing the file: " << databaseFilePath;
+            writeDatabase(databaseFilePath);
+        }
+        fclose(test);
+
+        return databaseFilePath;
     }
 
-    ctxt->setContextProperty("taskList", QVariant::fromValue(taskList));
+    /**
+     * @brief writeDatabase
+     * @param path
+     */
+    void writeDatabase(QString path) {
+        QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+        db.setDatabaseName(path);
+        if(db.open()){
+            QSqlQuery create(TASK_TABLE, db);
+            QSqlQuery insert(TASK_ROWS, db);
+            db.commit();
+            db.close();
+
+            qDebug() << "Database created.";
+        }
+        else {
+            qDebug() << "Could not create database.";
+        }
+    }
+
+    /**
+     * @brief Check if the path refers to an existing file.
+     * @param path
+     */
+    bool fileExists(QString path) {
+        QFileInfo check_file(path);
+        return check_file.exists() && check_file.isFile();
+    }
+
+
+    // FIXME this method belongs with Task. See https://doc.qt.io/qt-5.9/model-view-programming.html.
+    // also check file name conventions for C++
+    /**
+     * @brief setTasks
+     * @param ctxt
+     */
+    void setTasks(QQmlContext *ctxt){
+        QList<QObject*> taskList;
+        QString databaseFilePath = initializeDatabase();
+
+        QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+        db.setDatabaseName(databaseFilePath);
+        if (db.open()){
+            qDebug() << "success";
+
+            QSqlQuery query(GET_ALL_TASKS, db);
+            while(query.next()){
+                /*
+                qDebug() << "-> " << query.value("id").toLongLong() << " "
+                                  << query.value("title").toString() << " "
+                                  << query.value(3).toInt() << " "
+                                  << query.value(2).toString();
+                                  */
+
+                Task *task = new Task(query.value("id").toLongLong(),
+                                      query.value("title").toString(),
+                                      query.value("color").toString(),
+                                      Task::Priority(query.value("prio").toInt()),
+                                      false);
+                taskList.append(task);
+                qDebug() << (static_cast<Task::Priority>(task->prio())) << " " << (task->prio() == Task::Priority::High);
+            }
+
+            db.close();
+        }
+        else {
+            qDebug() << "Could not connect to the database.";
+        }
+
+        ctxt->setContextProperty("taskList", QVariant::fromValue(taskList));
+    }
+
 }
 
-
 // TODO create a class for hadling the database(s)
-
-

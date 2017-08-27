@@ -21,14 +21,14 @@ HEADERS += \
     src/model/task.h \
     src/util/local_db.h \
     src/main.h \
-    src/util/notificationclient.h \
-    src/util/system.h
+    src/util/system.h \
+    src/util/notification_client.h
 
 SOURCES += src/main.cpp \
     src/model/task.cpp \
     src/util/local_db.cpp \
-    src/util/notificationclient.cpp \
-    src/util/system.cpp
+    src/util/system.cpp \
+    src/util/notification_client.cpp
 
 RESOURCES += qml.qrc
 

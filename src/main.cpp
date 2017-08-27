@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
-    NotificationClient *notificationClient = new NotificationClient(&engine);
+    acorn::NotificationClient *notificationClient = new acorn::NotificationClient(&engine);
 
     // --------------------------------------------------------------- //
     // TODO remove this block (from QML too)
@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
     ctxt->setContextProperty("myModel", QVariant::fromValue(projectList));
     // --------------------------------------------------------------- //
 
-    setTasks(ctxt);
+    acorn::setTasks(ctxt);
     // --------------------------------------------------------------- //
 
     engine.load(QUrl(QLatin1String("qrc:/qml/main.qml")));

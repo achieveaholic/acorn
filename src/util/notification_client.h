@@ -60,30 +60,40 @@
 #include <QMenu>
 #include <QMessageBox>
 
-class NotificationClient : public QObject
-{
-    Q_OBJECT
-    Q_PROPERTY(QString notification READ notification WRITE setNotification NOTIFY notificationChanged)
-public:
-    explicit NotificationClient(QQmlApplicationEngine *engine);
+#ifdef Q_OS_ANDROID
 
-    void setNotification(const QString &notification);
-    QString notification() const;
+#include <QtAndroidExtras/QAndroidJniObject>
 
-    void loadNotification();
-    void initializeTray();
+#endif
 
-signals:
-    void notificationChanged();
+namespace acorn {
 
-private slots:
-    void updateNotification();
-    void close();
+    class NotificationClient : public QObject
+    {
+        Q_OBJECT
+        Q_PROPERTY(QString notification READ notification WRITE setNotification NOTIFY notificationChanged)
+    public:
+        explicit NotificationClient(QQmlApplicationEngine *engine);
 
-private:
-    QString m_notification;
-    QQmlApplicationEngine *m_engine;
-    QSystemTrayIcon *tray;
-};
+        void setNotification(const QString &notification);
+        QString notification() const;
+
+        void loadNotification();
+        void initializeTray();
+
+    signals:
+        void notificationChanged();
+
+    private slots:
+        void updateNotification();
+        void close();
+
+    private:
+        QString m_notification;
+        QQmlApplicationEngine *m_engine;
+        QSystemTrayIcon *tray;
+    };
+
+}
 
 #endif // NOTIFICATIONCLIENT_H
