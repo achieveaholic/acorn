@@ -123,7 +123,7 @@ namespace acorn {
 
         // create and initialize tray
         tray = new QSystemTrayIcon(m_engine->rootObjects().at(0));
-        tray->setIcon(QIcon("d:/repo/acorn/resources/images/icon.png"));
+        tray->setIcon(QIcon(":/resources/images/icon.png"));
         tray->setVisible(true);
 
         // create and set root menu
