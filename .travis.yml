@@ -7,5 +7,4 @@ install:
     - sudo apt-get install qt59-meta-full qtdeclarative5-dev
 
 script:
-    - qmake acorn.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug && /usr/bin/make qmake_all
-    - make
+    - qmake acorn.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug && /usr/bin/make
