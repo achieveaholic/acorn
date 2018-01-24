@@ -1,18 +1,20 @@
-win32:QT += qml quick sql widgets gui
-#else:unix:QT += qml quick sql
-else:QT += qml quick sql widgets gui androidextras
+found = $$find(QMAKE_CC, "android")
 
+count(found, 0){
+    message("Buidling for a desktop device")
+    QT += qml quick sql widgets gui
+}
+else {
+    message("Building for an android device")
+    QT += qml quick sql widgets gui androidextras
+}
+
+# required to find the android sources from the Qt code
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android-sources
 
-wi32:INCLUDEPATH += $$(NDK_INCLUDE)
-#else:unix:INCLUDEPATH += $$(NDK_INCLUDE)
-else:INCLUDEPATH += $$(NDK_INCLUDE)
+LIBS += -L"$ANDROID_NDK"
 
-win32:LIBS +=
-#else:unix:LIBS +=
-else:LIBS += -L"d:/Software/Android/sdk/ndk-bundle/platforms/android-26/arch-x86/usr/lib" -landroid
-
-CONFIG += c++11
+CONFIG += c++11 qtquickcompiler
 
 # Windows icon
 RC_FILE = resources/icons/acorn.rc
