@@ -7,7 +7,7 @@
 ### Prerequisites
 
 You need to install the following:
-* [Qt](https://www.qt.io/)
+* [Qt](https://doc.qt.io/qt-5/gettingstarted.html#install-qt)
 * [Android Studio](https://developer.android.com/studio/install.html)
 * [Android NDK](https://developer.android.com/ndk/guides/index.html)
 
