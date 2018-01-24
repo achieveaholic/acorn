@@ -4,7 +4,8 @@ install:
     - sudo add-apt-repository --yes ppa:beineri/opt-qt593-trusty
     - sudo apt-get update
     - sudo apt-get install libqt4-dev qt4-qmake build-essential libgl1-mesa-dev
-    - sudo apt-get install qt59-meta-full qtdeclarative5-dev
+    - sudo apt-get install qt59-meta-minimal qtdeclarative5-dev
 
 script:
+    - source /opt/qt59/bin/qt59-env.sh
     - qmake acorn.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug && /usr/bin/make
