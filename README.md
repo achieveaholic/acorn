@@ -4,6 +4,19 @@
 
 ## Building Steps
 
-* to be added
+### Prerequisites
+
+You need to install the following:
+* [Qt](https://www.qt.io/)
+* [Android Studio](https://developer.android.com/studio/install.html)
+* [Android NDK](https://developer.android.com/ndk/guides/index.html)
+
+See a detailed guideline here: [Getting Started with Qt for Android](https://doc.qt.io/qt-5/androidgs.html)
+
+### Running the project
+
+* Add the environment variable `ANDROID_NDK` to point to the location of your installed `NDK` library.
+  This should look something like: `/home/<user>/Downloads/android-ndk-r16b/platforms/android-27/arch-x86/usr/lib`.
+
 
 [![built-with-qt](resources/images/Built_with_Qt.png)](https://www.qt.io/)
