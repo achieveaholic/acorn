@@ -3,6 +3,8 @@ compiler: gcc
 install:
     - sudo apt-get update
     - sudo apt-get install libqt4-dev qt4-qmake build-essential libgl1-mesa-dev
+    - sudo add-apt-repository --yes ppa:beineri/opt-qt57-trusty
+    - sudo apt-get install -qq g++-6 qt57-meta-full
 
 script:
     - qmake -project
