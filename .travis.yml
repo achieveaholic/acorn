@@ -4,7 +4,7 @@ install:
     - sudo apt-get update
     - sudo apt-get install libqt4-dev qt4-qmake build-essential libgl1-mesa-dev
     - sudo add-apt-repository --yes ppa:beineri/opt-qt593-trusty
-    - sudo apt-get install qt5-qmake
+    - sudo apt-get install qt59-meta-full
 
 script:
     - qmake -project
