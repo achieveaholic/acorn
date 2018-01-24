@@ -1,0 +1,10 @@
+language: cpp
+compiler: gcc
+install:
+    - sudo apt-get update
+    - sudo apt-get install libqt4-dev qt4-qmake build-essential libgl1-mesa-dev
+
+script:
+    - qmake -project
+    - qmake acorn.pro
+    - make
