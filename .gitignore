@@ -72,3 +72,8 @@ Thumbs.db
 
 # Output Directory
 out/
+
+# Sonar
+.scannerwork/
+bw-output/
+sonar-project.properties
