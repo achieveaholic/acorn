@@ -46,5 +46,7 @@ int main(int argc, char *argv[])
 
     notificationClient->initializeTray();
 
-    return app.exec();
+    app.exec();
+
+    return 0;
 }
