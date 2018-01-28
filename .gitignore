@@ -70,3 +70,5 @@ Thumbs.db
 *.dll
 *.exe
 
+# Output Directory
+out/

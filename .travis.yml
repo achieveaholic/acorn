@@ -8,4 +8,6 @@ install:
 
 script:
     - source /opt/qt59/bin/qt59-env.sh
-    - qmake acorn.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug && /usr/bin/make
+    - mkdir out
+    - cd out
+    - qmake ../acorn.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug && /usr/bin/make
