@@ -56,25 +56,25 @@ import android.content.Context;
 
 public class NotificationClient extends org.qtproject.qt5.android.bindings.QtActivity
 {
-    private static NotificationManager m_notificationManager;
-    private static Notification.Builder m_builder;
-    private static NotificationClient m_instance;
+    private static NotificationManager notificationManager;
+    private static Notification.Builder builder;
+    private static NotificationClient instance;
 
     public NotificationClient()
     {
-        m_instance = this;
+        instance = this;
     }
 
-    public static void notify(String s)
+    public static void notify(String message)
     {
-        if (m_notificationManager == null) {
-            m_notificationManager = (NotificationManager)m_instance.getSystemService(Context.NOTIFICATION_SERVICE);
-            m_builder = new Notification.Builder(m_instance);
-            m_builder.setSmallIcon(R.drawable.icon);
-            m_builder.setContentTitle("A message from Qt!");
+        if (notificationManager == null) {
+            notificationManager = (NotificationManager)instance.getSystemService(Context.NOTIFICATION_SERVICE);
+            builder = new Notification.Builder(instance);
+            builder.setSmallIcon(R.drawable.icon);
+            builder.setContentTitle("A message from Qt!");
         }
 
-        m_builder.setContentText(s);
-        m_notificationManager.notify(1, m_builder.build());
+        builder.setContentText(message);
+        notificationManager.notify(1, builder.build());
     }
 }
