@@ -1,3 +1,5 @@
+#!/bin/sh
+
 build-wrapper-linux-x86-64 --out-dir bw-output make clean all
 
 sonar-scanner \
