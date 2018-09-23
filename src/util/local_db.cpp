@@ -3,7 +3,7 @@
 namespace acorn {
 
     LocalDB::LocalDB() {
-        setDatabaseFilePath(initializeDatabase());
+        initializeDatabase();
     }
 
     LocalDB* LocalDB::_instance = nullptr;
@@ -74,6 +74,7 @@ namespace acorn {
         }
         fclose(test);
 
+        setDatabaseFilePath(databaseFilePath);
         return databaseFilePath;
     }
 

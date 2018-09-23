@@ -41,7 +41,6 @@ int main(int argc, char *argv[])
 
     acorn::LocalDB *local_db = acorn::LocalDB::getInstace();
 
-    local_db->setDatabaseFilePath(local_db->initializeDatabase());
     local_db->setTasks(ctxt);
     // --------------------------------------------------------------- //
 
