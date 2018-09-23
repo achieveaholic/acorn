@@ -28,7 +28,7 @@ namespace acorn {
          */
         enum Priority { VeryHigh = 0, High = 1, Low = 2, VeryLow = 3};
 
-        explicit Task(QObject *parent = 0);
+        explicit Task(QObject *parent = nullptr);
         explicit Task(int long id, QString text, QString color, Priority prio, bool done = false);
 
         void setId(long int id) { m_id = id; }

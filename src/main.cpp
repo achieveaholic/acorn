@@ -39,7 +39,10 @@ int main(int argc, char *argv[])
     ctxt->setContextProperty("myModel", QVariant::fromValue(projectList));
     // --------------------------------------------------------------- //
 
-    acorn::setTasks(ctxt);
+    acorn::LocalDB *local_db = acorn::LocalDB::getInstace();
+
+    local_db->setDatabaseFilePath(local_db->initializeDatabase());
+    local_db->setTasks(ctxt);
     // --------------------------------------------------------------- //
 
     engine.load(QUrl(QLatin1String("qrc:/qml/main.qml")));

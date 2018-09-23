@@ -2,9 +2,22 @@
 
 namespace acorn {
 
+    LocalDB::LocalDB() {
+        setDatabaseFilePath(initializeDatabase());
+    }
+
+    LocalDB* LocalDB::_instance = nullptr;
+
+    LocalDB* LocalDB::getInstace(){
+        if (_instance == nullptr){
+            _instance = new LocalDB();
+        }
+        return _instance;
+    }
+
     #ifdef Q_OS_ANDROID
 
-    QString getPath() {
+    QString LocalDB::getPath() {
         __android_log_print(android_LogPriority::ANDROID_LOG_DEBUG, "Debug", "Retrieving android files path.");
 
         QAndroidJniObject mediaDir = QAndroidJniObject::callStaticObjectMethod("android/os/Environment", "getExternalStorageDirectory", "()Ljava/io/File;");
@@ -17,13 +30,13 @@ namespace acorn {
 
     #elif defined(_WIN32)
 
-    QString getPath() {
+    QString LocalDB::getPath() {
         return QStandardPaths::writableLocation(QStandardPaths::DataLocation)+"/";
     }
 
     #elif defined(__linux__)
 
-    QString getPath() {
+    QString LocalDB::getPath() {
         // TODO test
         return QStandardPaths::writableLocation(QStandardPaths::DataLocation)+"/";
         // return "~/.achieveaholic/acron";
@@ -31,11 +44,10 @@ namespace acorn {
 
     #endif
 
-
     /**
      * @brief Initialize the app database.
      */
-    QString initializeDatabase(){
+    QString LocalDB::initializeDatabase(){
         QString databaseDir = getPath() + "db";
         QString databaseFilePath = getPath() + DB_FILE_PATH;
 
@@ -48,7 +60,7 @@ namespace acorn {
         }
 
         FILE* test =  fopen(databaseFilePath.toLocal8Bit(), "r");
-        if (test == NULL) {
+        if (test == nullptr) {
             qDebug() << "The database file does not exist.";
 
             qDebug() << "Creating the directory: " << databaseDir;
@@ -69,7 +81,7 @@ namespace acorn {
      * @brief writeDatabase
      * @param path
      */
-    void writeDatabase(QString path) {
+    void LocalDB::writeDatabase(QString path) {
         QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
         db.setDatabaseName(path);
         if(db.open()){
@@ -89,7 +101,7 @@ namespace acorn {
      * @brief Check if the path refers to an existing file.
      * @param path
      */
-    bool fileExists(QString path) {
+    bool LocalDB::fileExists(QString path) {
         QFileInfo check_file(path);
         return check_file.exists() && check_file.isFile();
     }
@@ -101,12 +113,11 @@ namespace acorn {
      * @brief setTasks
      * @param ctxt
      */
-    void setTasks(QQmlContext *ctxt){
+    void LocalDB::setTasks(QQmlContext *ctxt){
         QList<QObject*> taskList;
-        QString databaseFilePath = initializeDatabase();
 
         QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-        db.setDatabaseName(databaseFilePath);
+        db.setDatabaseName(databaseFilePath());
         if (db.open()){
             qDebug() << "success";
 
@@ -138,5 +149,3 @@ namespace acorn {
     }
 
 }
-
-// TODO create a class for hadling the database(s)
