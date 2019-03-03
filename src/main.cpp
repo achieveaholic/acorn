@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
 
     acorn::LocalDB *local_db = acorn::LocalDB::getInstace();
 
-    local_db->setTasks(ctxt);
+    local_db->loadTasks(ctxt);
     // --------------------------------------------------------------- //
 
     engine.load(QUrl(QLatin1String("qrc:/qml/main.qml")));

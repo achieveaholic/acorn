@@ -59,7 +59,7 @@ namespace acorn {
 
         bool fileExists(QString);
 
-        void setTasks(QQmlContext *ctxt);
+        void loadTasks(QQmlContext *ctxt);
 
         QString databaseFilePath() const { return m_db_path; }
         void setDatabaseFilePath(QString db_path) { m_db_path = db_path; }

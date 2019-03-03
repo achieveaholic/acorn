@@ -108,13 +108,11 @@ namespace acorn {
     }
 
 
-    // FIXME this method belongs with Task. See https://doc.qt.io/qt-5.9/model-view-programming.html.
-    // also check file name conventions for C++
     /**
-     * @brief setTasks
+     * @brief loadTasks
      * @param ctxt
      */
-    void LocalDB::setTasks(QQmlContext *ctxt){
+    void LocalDB::loadTasks(QQmlContext *ctxt){
         QList<QObject*> taskList;
 
         QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
@@ -124,13 +122,6 @@ namespace acorn {
 
             QSqlQuery query(GET_ALL_TASKS, db);
             while(query.next()){
-                /*
-                qDebug() << "-> " << query.value("id").toLongLong() << " "
-                                  << query.value("title").toString() << " "
-                                  << query.value(3).toInt() << " "
-                                  << query.value(2).toString();
-                                  */
-
                 Task *task = new Task(query.value("id").toLongLong(),
                                       query.value("title").toString(),
                                       query.value("color").toString(),
