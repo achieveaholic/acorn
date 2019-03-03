@@ -103,7 +103,7 @@ namespace acorn {
         tray->showMessage("Hi there!", m_notification, QSystemTrayIcon::Information, 1000);
 
         // Message box
-        QMessageBox::information(0, tr("Hello"), tr("Just testing a dialog box."));
+        QMessageBox::information(nullptr, tr("Hello"), tr("Just testing a dialog box."));
     }
 
     #endif
