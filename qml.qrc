@@ -8,6 +8,5 @@
         <file>resources/fonts/TitilliumWeb-Regular.ttf</file>
         <file>resources/images/Built_with_Qt.png</file>
         <file>resources/images/icon.png</file>
-        <file>resources/images/tray.png</file>
     </qresource>
 </RCC>
