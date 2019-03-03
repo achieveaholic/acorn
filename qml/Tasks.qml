@@ -50,6 +50,8 @@ ListView {
                         }
                         else {
                             notificationClient.notification = "hello qt"
+                            notificationClient.notificationChanged()
+
                             //console.log("#" + colorModel.get(model.index).color.substring(3,9))
                             //colorModel.get(model.index).color = "#" + colorModel.get(model.index).color.substring(3,9)
                         }
