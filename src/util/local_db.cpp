@@ -72,8 +72,9 @@ namespace acorn {
 
             qDebug() << "Writing the file: " << databaseFilePath;
             writeDatabase(databaseFilePath);
+        } else {
+            fclose(test);
         }
-        fclose(test);
 
         setDatabaseFilePath(databaseFilePath);
         return databaseFilePath;
