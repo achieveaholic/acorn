@@ -10,6 +10,7 @@
 #include <QDir>
 #include <QCoreApplication>
 #include <QQmlContext>
+#include <QMessageBox>
 
 #ifdef Q_OS_ANDROID
 

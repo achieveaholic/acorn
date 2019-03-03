@@ -65,9 +65,10 @@ namespace acorn {
 
             qDebug() << "Creating the directory: " << databaseDir;
             QDir dir = QDir::root();
-            dir.mkpath(databaseDir);
-
-            // FIXME if the directory creation fails, warn user about required permission -> Storage
+            if (!dir.mkpath(databaseDir)) {
+                QMessageBox::critical(nullptr, tr("Error"), tr("The local database folder could not be created!"));
+                exit(EXIT_FAILURE);
+            }
 
             qDebug() << "Writing the file: " << databaseFilePath;
             writeDatabase(databaseFilePath);
