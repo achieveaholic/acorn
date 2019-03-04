@@ -22,12 +22,12 @@ Item {
 
             Keys.onPressed: {
                 // `Enter`
-                if (event.key == 16777220){
+                if (event.key === 16777220){
                     filterForm.visible = false
                     filterTasks()
                 }
                 // `Escape`
-                if (event.key == 16777216){
+                if (event.key === 16777216){
                     filterForm.visible = false
                     filterText.text = ""
                     filterTasks()

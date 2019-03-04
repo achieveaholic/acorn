@@ -41,7 +41,7 @@ ApplicationWindow {
         Keys.onPressed: {
             // On key pressed, except `Escape` and `Enter`.
             // If not visible, show filter and focus on it.
-            if (!taskForm.visible && event.key != 16777216) {
+            if (!taskForm.visible && event.key !== 6777216) {
                 taskForm.visible = true
                 taskForm.filterText.text += event.text
                 taskForm.filterText.forceActiveFocus()
@@ -52,7 +52,7 @@ ApplicationWindow {
             }
 
             // `Escape`
-            if (event.key == 16777216){
+            if (event.key === 16777216){
                 item1.visible = false
                 filterText.text = ""
                 filterTasks()
@@ -96,15 +96,15 @@ ApplicationWindow {
                 // On key pressed, except `Escape` and `Enter`.
                 // If not visible, show filter and focus on it.
                 if (!taskForm.visible &&
-                    event.key != 16777216 &&
-                    event.key != 16777220) {
+                    event.key !== 16777216 &&
+                    event.key !== 16777220) {
                     taskForm.visible = true
                     taskForm.filterText.text += event.text
                     taskForm.filterText.forceActiveFocus()
                 }
 
                 // `Escape`
-                if (event.key == 16777216){
+                if (event.key === 16777216){
                     taskForm.visible = false
                     taskForm.filterText.text = ""
                     filterTasks()
