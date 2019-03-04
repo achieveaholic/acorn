@@ -20,4 +20,8 @@ namespace acorn {
     }
     */
 
+    void Task::setDone(bool done){
+        m_done = done;
+    }
+
 }
