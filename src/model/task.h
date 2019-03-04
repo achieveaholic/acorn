@@ -2,6 +2,9 @@
 #define TASK_H
 
 #include <QObject>
+#include <QtDebug>
+#include <QSqlDatabase>
+#include <QSqlQuery>
 
 namespace acorn {
 
@@ -40,7 +43,7 @@ namespace acorn {
         QString color() const { return m_color; }
         void setPrio(Priority prio) { m_prio = prio; }
         Priority prio() const { return m_prio; }
-        void setDone(bool done) { m_done = done; }
+        void setDone(bool done);
         long done() const { return m_done; }
 
     signals:

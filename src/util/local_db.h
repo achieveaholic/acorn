@@ -37,16 +37,17 @@ namespace acorn {
                                             `color`	TEXT,\
                                             `desc`	TEXT,\
                                             `prio`	INTEGER,\
+                                            `done`	INTEGER,\
                                             PRIMARY KEY(`id`)\
                                         );";
 
         const QString GET_ALL_TASKS = "SELECT * FROM Task";
 
-        const QString TASK_ROWS = "INSERT INTO Task (id, title, color, desc, prio) VALUES\
-                                               (1, 'Task 1', '#eef2f0', 'desc', 2),\
-                                               (2, 'Task 2', '#c6d0be', 'desc', 1),\
-                                               (3, 'Task 3', '#d0bec9', 'desc', 3),\
-                                               (4, '" + QSysInfo::productType() + "', '#eef2f0', 'desc', 0)";
+        const QString TASK_ROWS = "INSERT INTO Task (id, title, color, desc, prio, done) VALUES\
+                                               (1, 'Task 1', '#eef2f0', 'desc', 2, 0),\
+                                               (2, 'Task 2', '#c6d0be', 'desc', 1, 0),\
+                                               (3, 'Task 3', '#d0bec9', 'desc', 3, 0),\
+                                               (4, '" + QSysInfo::productType() + "', '#eef2f0', 'desc', 0, 0)";
 
     public:
 
