@@ -21,8 +21,6 @@
 
 #endif
 
-#include "../model/task.h"
-
 namespace acorn {
 
     class LocalDB : public QObject
@@ -40,8 +38,6 @@ namespace acorn {
                                             `done`	INTEGER,\
                                             PRIMARY KEY(`id`)\
                                         );";
-
-        const QString GET_ALL_TASKS = "SELECT * FROM Task";
 
         const QString TASK_ROWS = "INSERT INTO Task (id, title, color, desc, prio, done) VALUES\
                                                (1, 'Task 1', '#eef2f0', 'desc', 2, 0),\
@@ -61,7 +57,7 @@ namespace acorn {
 
         bool fileExists(QString);
 
-        void loadTasks(QQmlContext *ctxt);
+        QSqlDatabase getDatabase();
 
         QString databaseFilePath() const { return m_db_path; }
         void setDatabaseFilePath(QString db_path) { m_db_path = db_path; }
@@ -69,6 +65,7 @@ namespace acorn {
     private:
 
         QString m_db_path;
+        QSqlDatabase db;
 
         static LocalDB* _instance;
         explicit LocalDB();

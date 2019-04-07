@@ -15,7 +15,7 @@
 #include <QQuickView>
 
 #include "model/task.h"
-#include "util/local_db.h"
+#include "util/model_provider.h"
 #include "util/notification_client.h"
 #include "util/system.h"
 

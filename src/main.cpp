@@ -38,10 +38,9 @@ int main(int argc, char *argv[])
     QQmlContext *ctxt = engine.rootContext();
     ctxt->setContextProperty("myModel", QVariant::fromValue(projectList));
     // --------------------------------------------------------------- //
+    acorn::ModelProvider *modelProvider = acorn::ModelProvider::getInstace();
 
-    acorn::LocalDB *local_db = acorn::LocalDB::getInstace();
-
-    local_db->loadTasks(ctxt);
+    modelProvider->loadTasks(ctxt);
     // --------------------------------------------------------------- //
 
     engine.load(QUrl(QLatin1String("qrc:/qml/main.qml")));
@@ -50,5 +49,5 @@ int main(int argc, char *argv[])
 
     app.exec();
 
-    return 0;
+    return modelProvider->closeConnection();
 }

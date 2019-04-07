@@ -109,37 +109,12 @@ namespace acorn {
         return check_file.exists() && check_file.isFile();
     }
 
-
-    /**
-     * @brief loadTasks
-     * @param ctxt
-     */
-    void LocalDB::loadTasks(QQmlContext *ctxt){
-        QList<QObject*> taskList;
-
-        QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-        db.setDatabaseName(databaseFilePath());
-        if (db.open()){
-            qDebug() << "success";
-
-            QSqlQuery query(GET_ALL_TASKS, db);
-            while(query.next()){
-                Task *task = new Task(query.value("id").toLongLong(),
-                                      query.value("title").toString(),
-                                      query.value("color").toString(),
-                                      Task::Priority(query.value("prio").toInt()),
-                                      false);
-                taskList.append(task);
-                qDebug() << (static_cast<Task::Priority>(task->prio())) << " " << (task->prio() == Task::Priority::High);
-            }
-
-            db.close();
+    QSqlDatabase LocalDB::getDatabase() {
+        if (!this->db.isValid()) {
+            db = QSqlDatabase::addDatabase("QSQLITE",  "db");
+            db.setDatabaseName(databaseFilePath());
         }
-        else {
-            qDebug() << "Could not connect to the database.";
-        }
-
-        ctxt->setContextProperty("taskList", QVariant::fromValue(taskList));
+        return db;
     }
 
 }

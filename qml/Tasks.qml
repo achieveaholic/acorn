@@ -38,19 +38,24 @@ ListView {
                 color: model.color
                 CheckBox {
                     id: done
-                    checked: false
+                    checked: taskList[model.index].done
                     anchors.verticalCenter: icon.verticalCenter
 
                     onCheckedChanged: {
                         if (done.checked){
-                            messageDialog.visible = true
-                            colorModel.remove(model.index)
+                            // messageDialog.visible = true
+
+                            taskList[model.index].done = true
+                            notificationClient.notification = taskList[model.index].done
+                            // TODO -> only call this when needed
+                            notificationClient.notificationChanged()
                             //console.log("#88" + colorModel.get(model.index).color.substring(1,7))
                             //colorModel.get(model.index).color = "#88" + colorModel.get(model.index).color.substring(1,7)
                         }
                         else {
-                            notificationClient.notification = "hello qt"
-                            notificationClient.notificationChanged()
+                            taskList[model.index].done = false
+//                            notificationClient.notification = "hello qt"
+//                            notificationClient.notificationChanged()
 
                             //console.log("#" + colorModel.get(model.index).color.substring(3,9))
                             //colorModel.get(model.index).color = "#" + colorModel.get(model.index).color.substring(3,9)

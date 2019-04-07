@@ -6,6 +6,8 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 
+#include "../util/local_db.h"
+
 namespace acorn {
 
     class Task : public QObject
@@ -61,6 +63,8 @@ namespace acorn {
         QString m_color;
         Priority m_prio;
         bool m_done;
+
+        QSqlDatabase db;
     };
 
 }

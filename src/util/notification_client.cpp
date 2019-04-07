@@ -100,10 +100,13 @@ namespace acorn {
         qDebug() << "Message: " << m_notification;
 
         // Tray message
-        tray->showMessage("Hi there!", m_notification, QSystemTrayIcon::Information, 1000);
+        // FIXME this is prone to cause segmentation fault
+        // TODO use this where needed
+        // tray->showMessage("Hi there!", m_notification, QSystemTrayIcon::Information, 1000);
 
-        // Message box
-        QMessageBox::information(nullptr, tr("Hello"), tr("Just testing a dialog box."));
+        // TODO use this where needed
+        // Message box - illustrative purposes
+        // QMessageBox::information(nullptr, tr("Hello"), tr("Just testing a dialog box."));
     }
 
     #endif
