@@ -49,5 +49,7 @@ int main(int argc, char *argv[])
 
     app.exec();
 
-    return modelProvider->closeConnection();
+    modelProvider->closeConnection();
+
+    return 0;
 }
