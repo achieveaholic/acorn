@@ -32,7 +32,7 @@ namespace acorn {
          * @brief The Priority enum
          */
         enum Priority { VeryHigh = 0, High = 1, Low = 2, VeryLow = 3};
-        enum Done { NotDone = 0, Skipped = 1, Rejected = 2, Done = 3};
+        enum Done { NotDone = 0, Rejected = 1, Done = 2};
 
         explicit Task(QObject *parent = nullptr);
         explicit Task(int long id, QString text, QString color, Priority prio, bool done = false);
