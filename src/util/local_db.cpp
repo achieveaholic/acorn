@@ -20,12 +20,10 @@ namespace acorn {
     QString LocalDB::getPath() {
         __android_log_print(android_LogPriority::ANDROID_LOG_DEBUG, "Debug", "Retrieving android files path.");
 
-        QAndroidJniObject mediaDir = QAndroidJniObject::callStaticObjectMethod("android/os/Environment", "getExternalStorageDirectory", "()Ljava/io/File;");
-        QAndroidJniObject mediaPath = mediaDir.callObjectMethod( "getAbsolutePath", "()Ljava/lang/String;" );
         QAndroidJniObject activity = QAndroidJniObject::callStaticObjectMethod("org/qtproject/qt5/android/QtNative", "activity", "()Landroid/app/Activity;");
         QAndroidJniObject package = activity.callObjectMethod("getPackageName", "()Ljava/lang/String;");
 
-        return mediaPath.toString() + "/Android/data/" + package.toString() + "/files/";
+        return "/data/user/0/" + package.toString() + "/files/";
     }
 
     #elif defined(_WIN32)
