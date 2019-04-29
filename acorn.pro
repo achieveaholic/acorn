@@ -1,6 +1,6 @@
-found = $$find(QMAKE_CC, "android")
+android = $$find(QMAKE_CC, "Android")
 
-count(found, 0){
+count(android, 0){
     message("Buidling for a desktop device")
     QT += qml quick sql widgets gui
 }
