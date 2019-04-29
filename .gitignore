@@ -77,3 +77,6 @@ build/
 # Sonar
 .scannerwork/
 bw-output/
+
+# VSCode
+.vscode/
