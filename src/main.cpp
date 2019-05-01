@@ -13,6 +13,7 @@ int main(int argc, char *argv[])
 
     app.setApplicationName("Acorn");
     app.setOrganizationName("AchieveAholic");
+    app.setWindowIcon(QIcon(":/resources/images/icon.png"));
 
     // TODO decide which font to use here
         // App logo - TitilliumWeb?
