@@ -65,3 +65,10 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
+DISTFILES += \
+    android-sources/libs/classes.jar \
+    android-sources/res/drawable-ldpi/icon.png \
+    android-sources/res/drawable-ldpi/icon_notification.png \
+    android-sources/res/drawable/icon.png \
+    android-sources/res/drawable/icon_notification.png
+

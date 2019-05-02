@@ -50,15 +50,24 @@
 
 package org.achieveaholic.acorn;
 
-import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.TaskStackBuilder;
 
 public class NotificationClient extends org.qtproject.qt5.android.bindings.QtActivity
 {
     private static NotificationManager notificationManager;
-    private static Notification.Builder builder;
+    private static NotificationCompat.Builder builder;
     private static NotificationClient instance;
+    private static Context context;
+
+    private static final String TASK_NOTIFICATION_ID = "acorn.task.reminder";
 
     public NotificationClient()
     {
@@ -67,11 +76,44 @@ public class NotificationClient extends org.qtproject.qt5.android.bindings.QtAct
 
     public static void notify(String message)
     {
+        if (context == null) {
+            context = instance.getApplicationContext();
+        }
         if (notificationManager == null) {
             notificationManager = (NotificationManager)instance.getSystemService(Context.NOTIFICATION_SERVICE);
-            builder = new Notification.Builder(instance);
-            builder.setSmallIcon(R.drawable.icon);
-            builder.setContentTitle("A message from Qt!");
+
+            int smallIcon;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                final String id = NotificationClient.TASK_NOTIFICATION_ID;
+                final CharSequence name = "Task reminder";
+                final String description = "Task reminder notifications";
+                final int importance = NotificationManager.IMPORTANCE_HIGH;
+                final NotificationChannel mChannel = new NotificationChannel(id, name, importance);
+                mChannel.setDescription(description);
+                mChannel.enableLights(true);
+                mChannel.setLightColor(Color.MAGENTA);
+                mChannel.enableVibration(true);
+                mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+                mChannel.setShowBadge(false);
+                notificationManager.createNotificationChannel(mChannel);
+
+                smallIcon = R.drawable.icon_notification;
+            } else {
+                smallIcon = R.drawable.icon;
+            }
+
+            builder = new NotificationCompat.Builder(context, NotificationClient.TASK_NOTIFICATION_ID)
+                    .setSmallIcon(smallIcon)
+                    .setContentTitle("Acorn test notification!")
+                    .setContentText(message);
+
+            Intent resultIntent = new Intent(context, NotificationClient.class);
+            TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+            stackBuilder.addParentStack(NotificationClient.class);
+            stackBuilder.addNextIntent(resultIntent);
+            PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            builder.setContentIntent(resultPendingIntent);
         }
 
         builder.setContentText(message);
