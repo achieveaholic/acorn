@@ -25,7 +25,7 @@ ListView {
             width: root.width
             height: 80
             function enableDragAndDrop() {
-                if (mouseY > 25 && mouseY < 55 && mouseX >= 590 && mouseX <= 620) {
+                if (mouseY > 25 && mouseY < 55 && mouseX >= root.width - 55 && mouseX <= root.width - 25) {
                     delegateRoot.drag.target = icon
                 }
             }
