@@ -1,6 +1,6 @@
-import QtQuick 2.7
-import QtQml.Models 2.2
-import QtQuick.Controls 2.1
+import QtQuick 2.12
+import QtQml.Models 2.12
+import QtQuick.Controls 2.5
 
 ListView {
     id: root
@@ -24,7 +24,20 @@ ListView {
 
             width: root.width
             height: 80
-            drag.target: icon
+            function enableDragAndDrop() {
+                if (mouseY > 25 && mouseY < 55 && mouseX >= 590 && mouseX <= 620) {
+                    delegateRoot.drag.target = icon
+                }
+            }
+
+            onMouseXChanged: {
+                enableDragAndDrop()
+            }
+
+            onMouseYChanged: {
+                enableDragAndDrop()
+            }
+
             drag.axis: Drag.YAxis
 
             Rectangle {
@@ -94,12 +107,36 @@ ListView {
                         }
                     }
                 ]
+
+                Rectangle {
+                    id: dragme
+                    width: 30; height: 30; x: root.width - 55; y: 21
+                    color: 'purple'
+                }
             }
 
             DropArea {
                 anchors { fill: parent; margins: 15 }
 
-                onEntered: visualModel.items.move(drag.source.visualIndex, delegateRoot.visualIndex)
+                onEntered: {
+                    visualModel.items.move(drag.source.visualIndex, delegateRoot.visualIndex)
+                }
+
+                Timer {
+                   id: timer
+                }
+
+                onExited: {
+                    timer.interval = 300;
+                    timer.repeat = false;
+                    timer.triggered.connect(function () {
+                        if (!delegateRoot.drag.active){
+                            delegateRoot.drag.target = null;
+                        }
+                    })
+
+                    timer.start();
+                }
             }
         }
     }
