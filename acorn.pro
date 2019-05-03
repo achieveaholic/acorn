@@ -14,7 +14,7 @@ ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android-sources
 
 LIBS += -L"$ANDROID_NDK"
 
-CONFIG += c++11 qtquickcompiler
+CONFIG += c++17 qtquickcompiler
 
 # Windows icon
 RC_FILE = resources/icons/acorn.rc
