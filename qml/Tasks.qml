@@ -127,7 +127,7 @@ ListView {
                 }
 
                 onExited: {
-                    timer.interval = 300;
+                    timer.interval = 100;
                     timer.repeat = false;
                     timer.triggered.connect(function () {
                         if (!delegateRoot.drag.active){
