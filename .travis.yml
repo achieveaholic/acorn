@@ -2,9 +2,9 @@ language: cpp
 compiler: gcc
 install:
     - sudo add-apt-repository --yes ppa:beineri/opt-qt-5.14.0-bionic
-    - sudo apt update
-    - sudo apt install libqt4-dev qt4-qmake build-essential libgl1-mesa-dev
-    - sudo apt install qt514-meta-minimal qtdeclarative5-dev
+    - sudo apt-get update
+    - sudo apt-get install libqt4-dev qt4-qmake build-essential libgl1-mesa-dev
+    - sudo apt-get install qt514-meta-minimal qtdeclarative5-dev
 
 script:
     - source /opt/qt514/bin/qt514-env.sh
