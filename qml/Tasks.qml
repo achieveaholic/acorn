@@ -111,7 +111,13 @@ ListView {
                 Rectangle {
                     id: dragme
                     width: 30; height: 30; x: root.width - 55; y: 21
-                    color: 'purple'
+                    color: parent.color
+                    Image {
+                        id: grip
+                        source: "../resources/images/grip.png"
+                        x: -25
+                        y: -10
+                    }
                 }
             }
 
