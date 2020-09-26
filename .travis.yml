@@ -1,14 +1,17 @@
-dist: bionic
-language: cpp
-compiler: gcc
-install:
-    - sudo add-apt-repository --yes ppa:beineri/opt-qt-5.14.0-bionic
-    - sudo apt-get update
-    - sudo apt-get install libqt4-dev qt4-qmake build-essential libgl1-mesa-dev
-    - sudo apt-get install qt514-meta-minimal qtdeclarative5-dev
-
-script:
-    - source /opt/qt514/bin/qt514-env.sh
-    - mkdir out
-    - cd out
-    - qmake ../acorn.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug && /usr/bin/make
+dist: focal
+services:
+- docker
+before_install:
+- docker load -i docker_images/images.tar || true
+- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+- docker pull "$DOCKER_USERNAME"/qt:5.15.1
+- docker run -ti -v "$PWD":/root/acorn qt-with-acorn /root/acorn/build_linux.sh
+cache:
+  directories:
+  - docker_images
+before_cache:
+- docker save -o docker_images/images.tar $(docker images -a -q)
+env:
+  global:
+  - secure: ELoldiFBZsV0DMiNrg11lye3jbs+kVf/IJyKUiJrsDTkcUHXgCSstkDnbRS38pCgg9/XkHSJEkDUF7CZsg/LL1I1zXHze/8rHE/hSB7KPSEhhHrQemqVtTiMTmNfGObJUZG0M478do4XM3fdUT0kNAEbqGSLamhsYC1jUoMKwABYLfHPUy6DuugmWna4eFAcuD3uHycUY4/GFn1k/X/jia9/SWfW1qn83jVE/JUSlCnsCL91vQW4ZlBvbvcrb7l2Zsyqn4apJoM7OWyvWHVnzgNNGuKxMdYb9KVb7zYnLWHP/c7YBMhD4+ToA43+Z0ptIT49CQJXQG9NWU8DV/bmYGSuJ2PnqiFyAlTjtatUez1AxVa6ksQib531gxu8L0OAkTrRHd8P0DpuRK1eb41ioa2KobICZWFbOttJ2/yEweKEA7IemmUwcAvmZS+K87tjeO1xOytQMUF27Ie5bdO6sSTKwPEBrMz2ztf+UIkZS0Zx6r4JV4bHGSyf5Vdu9e71M1farot9O5Pj/eRBbzwwYIJLsG1X5DorUQ9bh2q8k76mfNI0sUzlNm2t8EwHemAsPIsZ1jar3SYnBB2lBQmARArCQ+xu05vNRhOO6PL+Gcs4wPzZ19MJyCg+T3JPp2gyloP6PUQUprqvX1dYimjtjzuea0xpUK8jKQdfevf8X4s=
+  - secure: 0Z6RFbAWAGJzjy0QgtSIh3GcRgi78ib6lHw87mEtkbOZ2E57J2Psow5qRrMixdpJwnqoi3dqtmu4v2UJ3l3CQhc1YOum99ohbm0zWcmfNBCPoP6pCC2vmW6RST/qJALn+BjEP5gSlpsmaq6GlZ8dkfeGVofeU1lKH3X86DAw6KVVQx/uFYlBdG4brwfKH4GWvg84EAjNB9i55VtEAAMnkFor6xbQcaVhleafShBSwI964MZwXRFA9P7bAW9FfoeXWe9WHFMXiF74Zy2SLsDm580TyYm/xK4L51pSURB4G3WUpcoPXh/YY+CFeMGcyhNG+seSGGI5sNeqMxCwRnwRR936o25N6ZuYd28kKbBYgeMO1wYtzz9B5cTsMJA2OcZ8bJFXYUhWxg5KXSigFBdu/OajQt8u8qqZ0hzRIq/+ZrOzcICMP1CPJiQUs13+RGcg3EN48txLk33lq+A8SJ2TSW9LuqApe2jAQMoyHdjbYXok0v7t2ZXq8xLrDtSOv0wBtmg2nVvNGvXWuDg1ZnhB7bZTiACDtNwj/la0d9dxpmQsiM9lFJHVql/ejfy/ceX6LdDlM//1WSnrJvEib9xS+BXwxeAF51At2nPW72/hjyRpHUfHrZ50TwSwwdEYPXgckdcfLDEt4W/RpHrVBWTC3bJ3jRwySGhx0yMeZn855zA=
