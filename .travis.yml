@@ -8,7 +8,7 @@ before_install:
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 - docker pull "$DOCKER_USERNAME"/qt-ubuntu-5.15.2:v1
 script:
-- docker run -ti -v "$PWD":/root/acorn "$DOCKER_USERNAME"/qt-ubuntu-5.15.2:v1 /root/acorn/build_linux.sh
+- docker run -ti -v "$PWD":/root/acorn "$DOCKER_USERNAME"/qt-ubuntu-5.15.2:v1 /root/acorn/buildWithDockerOnLinux.sh
 cache:
   directories:
   - docker_images
